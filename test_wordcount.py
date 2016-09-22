@@ -5,7 +5,7 @@ import wordcount_lib
 
 def _make_testfile(filename, data):
     "Make a temp file containing the given data; return full path to file."
-    
+
     tempdir = tempfile.mkdtemp(prefix='wordcounttest_')
     testfile = os.path.join(tempdir, filename)
 
@@ -33,7 +33,7 @@ def test_consume_2():
     assert chars == 12                    # includes whitespace in char count
     assert words == 5
     assert lines == 5
-    
+
 def test_consume_3():
     # check something tricky: whitespace at beginning & end of line
     testfile = _make_testfile('sometext.txt', ' a b c ')
@@ -42,4 +42,12 @@ def test_consume_3():
     assert chars == 7                     # includes whitespace in char count
     assert words == 3
     assert lines == 1
-    
+
+def test_consume_4():
+    # check something tricky: whitespace at beginning & end of line
+    testfile = _make_testfile('sometext.txt', ' a b c d ee ')
+    chars, words, lines = wordcount_lib.consume(testfile)
+
+    assert chars == 12                     # includes whitespace in char count
+    assert words == 5
+    assert lines == 1
